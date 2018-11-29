@@ -99,7 +99,7 @@
         self.$el.trigger('select',[num,itemLength]);//方法二
 
       }).on('click','.rating-item',function(){
-        self.opts.num=$(this).index() +this.add;
+        self.opts.num=$(this).index() +self.add;
         (typeof self.opts.chosen==='function')&&self.opts.chosen.call(this,self.opts.num,itemLength);
         self.$el.trigger('chosen',[self.opts.num,itemLength]);
         
