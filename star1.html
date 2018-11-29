@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>star one</title>
+<style>
+  body,ul,li{
+    margin: 0;
+    padding: 0;
+  }
+  li{
+    list-style-type: none;
+  }
+  .rating{
+    width: 325px;
+    height: 67px;
+    margin: 100px auto;
+  }
+  .rating-item{
+    float: left;
+    width: 65px;
+    /* 每个li的大小就设置为星星的大小，则背景图片就只显示星星的大小，即第一个 */
+    height: 67px;
+    background: url(img/star.jpg) no-repeat;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <ul class="rating">
+    <li id="rating-item" class="rating-item" title="很不好"></li>
+    <li id="rating-item" class="rating-item" title="不好"></li>
+    <li id="rating-item" class="rating-item" title="一般"></li>
+    <li id="rating-item" class="rating-item" title="好"></li>
+    <li id="rating-item" class="rating-item" title="很好"></li>
+  </ul>
+</body>
+<!-- <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+  var num=2,
+      $rating=$('.rating'),
+      $item= $rating.find('.rating-item');
+  var lightOn=function(num){
+    $item.each(function(index){
+      if(index<num){
+        $(this).css('background-position','0 -67px');
+      }else{
+        $(this).css('background-position','0 0');
+      }
+    })
+  }
+// this是一个html元素(rating)，指的是不是jquery对象，因此this不能调用jquery的css()方法;$(this)是一个jquery对象，不是html元素，可以用css()方法
+// this是javascript自身的语法关键字，它指向一个javascript对象，所以可以使用所指向的目标javascript对象所拥有的方法, 但他自己不是一个普通的变量，所以你无法自己定义一个变量叫this
+// 所以为了使用jQuery对象的方法，你必须传入jQuery函数$(this), 将javascript 对象包装成为一个jquery对象。
+
+//初始化 点亮两颗星星
+lightOn(num);
+
+//点击事件
+$item.on('mouseover',function(){
+  lightOn($(this).index() +1) 
+  //$(this).index()是鼠标移动的索引值，记住index()加括号！索引值加1是星星个数
+}).on('click',function(){
+  num=$(this).index() +1;
+})
+$rating.on('mouseout',function(){
+  lightOn(num);
+})
+//鼠标移除是绑定在父容器上的操作，记住鼠标移除时num值。若是鼠标移动事件，则num并未改变，鼠标移除时仍保持原样；
+// 若是鼠标点击事件，则num改变，鼠标移出时改变星星状态
+</script>
+</html>
